@@ -1,0 +1,53 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity hex7seg_top is
+ Port ( sw : in  STD_LOGIC_VECTOR (3 downto 0);  
+ a_to_g : out  STD_LOGIC_VECTOR (6 downto 0);    
+ an : out  STD_LOGIC_VECTOR (3 downto 0);
+ dp : out  STD_LOGIC); 
+end hex7seg_top;
+architecture hex7seg_top of hex7seg_top is 
+component hex7segb is 
+	port( x: in STD_LOGIC_VECTOR (3 downto 0);                  
+	a_to_g : out  STD_LOGIC_VECTOR (6 downto 0) 
+	);
+ end component; 
+begin
+	an <= "0000";
+	dp<= '1' ; 
+	d4: hex7segb port map (x=>sw, a_to_g => a_to_g);
+end hex7seg_top;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity hex7segb is 
+port (x : in  STD_LOGIC_VECTOR (3 downto 0); 
+		a_to_g : out  STD_LOGIC_VECTOR (6 downto 0)); 
+end hex7segb;
+
+architecture  hex7segb of hex7segb is
+begin
+process(x) 
+begin 
+case x is
+	when x"0" => a_to_g <= "0000001"; 
+	when x"1" => a_to_g <= "1001111"; 
+	when x"2" => a_to_g <= "0010010"; 
+	when x"3" => a_to_g <= "0000110";
+	when x"4" => a_to_g <= "1001100"; 
+	when x"5" => a_to_g <= "0100100"; 
+	when x"6" => a_to_g <= "0100000";
+	when x"7" => a_to_g <= "0001111";
+	when x"8" => a_to_g <= "0000000";
+	when x"9" => a_to_g <= "0000100";
+	when x"A" => a_to_g <= "0001000";
+	when x"B" => a_to_g <= "1100000";
+	when x"C" => a_to_g <= "0110001";
+	when x"D" => a_to_g <= "1000010";
+	when x"E" => a_to_g <= "0110000";
+	when others => a_to_g <= "0111000";
+	end case; 
+	end process; 
+
+end  hex7segb;
+
